@@ -20,7 +20,7 @@ setup(
     url='https://github.com/asifpy/django-crudbuilder',
     author='Asif Jamadar',
     author_email='saluasif@gmail.com',
-    long_description=read('README.MD'),
+    long_description=read('README.md'),
     install_requires=[
         'django_tables2',
     ],
