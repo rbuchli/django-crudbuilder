@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 
 class Audit(models.Model):
@@ -22,7 +22,6 @@ class Audit(models.Model):
 
 
 class Person(Audit):
-
     """ an actual singular human being """
     # model fields
     name = models.CharField(blank=True, max_length=100)
@@ -40,7 +39,6 @@ class Person(Audit):
 
 
 class PersonEmployment(Audit):
-
     mypk = models.AutoField(primary_key=True)
     year = models.IntegerField()
     salary = models.FloatField()

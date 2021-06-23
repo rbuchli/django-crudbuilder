@@ -1,12 +1,10 @@
 from crudbuilder.abstract import BaseCrudBuilder
 from crudbuilder.formset import BaseInlineFormset
-
-from example.models import Person, PersonEmployment
-from example.tables import CustomPersonTable
-from example.forms import (
+from .forms import (
     PersonEmployementCreateForm,
     PersonEmployementUpdateForm
 )
+from .models import Person, PersonEmployment
 
 
 class PersonEmploymentInlineFormset(BaseInlineFormset):

@@ -8,7 +8,12 @@ from django.views.generic import (
 )
 from django_tables2 import SingleTableView
 
-from crudbuilder.registry import registry
+from crudbuilder.abstract import BaseBuilder
+from crudbuilder.helpers import (
+    model_class_form,
+    plural,
+    reverse_lazy
+)
 from crudbuilder.mixins import (
     CrudBuilderMixin,
     BaseListViewMixin,
@@ -17,13 +22,8 @@ from crudbuilder.mixins import (
     BaseDetailViewMixin,
     LoginRequiredMixin
 )
-from crudbuilder.abstract import BaseBuilder
+from crudbuilder.registry import registry
 from crudbuilder.tables import TableBuilder
-from crudbuilder.helpers import (
-    model_class_form,
-    plural,
-    reverse_lazy
-)
 
 
 class ViewBuilder(BaseBuilder):
@@ -88,12 +88,12 @@ class ViewBuilder(BaseBuilder):
         name = model_class_form(self.model + 'ListView')
         list_args = dict(
             model=self.get_model_class,
-            context_object_name=plural(self.model),
+            context_object_name=plural(self.model, ''),
             template_name=self.get_template('list'),
             table_class=self.get_actual_table(),
             context_table_name='table_objects',
             crud=self.crud,
-            permissions=self.view_permission('list'),
+            permissions=self.view_permission('view'),
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             table_pagination={'per_page': self.tables2_pagination or 10},
@@ -123,7 +123,7 @@ class ViewBuilder(BaseBuilder):
             form_class=self.get_actual_form('create'),
             model=self.get_model_class,
             template_name=self.get_template('create'),
-            permissions=self.view_permission('create'),
+            permissions=self.view_permission('add'),
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             inlineformset=self.inlineformset,
@@ -154,7 +154,7 @@ class ViewBuilder(BaseBuilder):
             model=self.get_model_class,
             template_name=self.get_template('detail'),
             login_required=self.check_login_required,
-            permissions=self.view_permission('detail'),
+            permissions=self.view_permission('view'),
             inlineformset=self.inlineformset,
             permission_required=self.check_permission_required,
             custom_detail_context=self.custom_detail_context,
@@ -173,7 +173,7 @@ class ViewBuilder(BaseBuilder):
             form_class=self.get_actual_form('update'),
             model=self.get_model_class,
             template_name=self.get_template('update'),
-            permissions=self.view_permission('update'),
+            permissions=self.view_permission('change'),
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             inlineformset=self.inlineformset,

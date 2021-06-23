@@ -1,16 +1,13 @@
 import django
 
-try:
-    from django.apps import apps
-except ImportError:
-    pass
+from django.apps import apps
 
-from crudbuilder.registry import register
+from . registry import register
 from six import with_metaclass
 from django.contrib.contenttypes.models import ContentType
 
-from crudbuilder.exceptions import NotModelException
-from crudbuilder import helpers
+from . exceptions import NotModelException
+from . import helpers
 
 
 class BaseBuilder(object):

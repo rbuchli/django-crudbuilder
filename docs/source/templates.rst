@@ -20,24 +20,24 @@ Model
 
 For single object crud.::
 
-	templates/crudbuilder/instance
-		list.html
-		create.html
-		update.html
-		delete.html
-		detail.html
+    templates/crudbuilder/instance
+        list.html
+        create.html
+        update.html
+        delete.html
+        detail.html
 
 Inline Formset
 ##############
 
 For inline formset.::
 
-	templates/crudbuilder/inline
-	    list.html
-	    create.html
-	    update.html
-	    delete.html
-	    detail.html
+    templates/crudbuilder/inline
+        list.html
+        create.html
+        update.html
+        delete.html
+        detail.html
 
 
 Custom templates for specific model:
@@ -45,21 +45,21 @@ Custom templates for specific model:
 
 If you want to create custom templates for specific model, then update the CRUD class with custom template path as shown below.::
 
-	class PersonCrud(BaseCrudBuilder):
-	    model = Person
-	    search_fields = ['name']
-	    tables2_fields = ('name', 'email')
-	    tables2_css_class = "table table-bordered table-condensed"
-	    tables2_pagination = 20  # default is 10
-	    modelform_excludes = ['created_by', 'updated_by']
+    class PersonCrud(BaseCrudBuilder):
+        model = Person
+        search_fields = ['name']
+        tables2_fields = ('name', 'email')
+        tables2_css_class = "table table-bordered table-condensed"
+        tables2_pagination = 20  # default is 10
+        modelform_excludes = ['created_by', 'updated_by']
 
-	    custom_templates = {
-	        'list': 'yourtemplates/your_list_template.html',
-	        'create': 'yourtemplates/your_create_template.html',
-	        'detail': 'yourtemplates/your_detail_template.html',
-	        'update': 'yourtemplates/your_update_template.html',
-	        'delete': 'yourtemplates/your_delete_template.html' 
-	        }
+        custom_templates = {
+            'list': 'yourtemplates/your_list_template.html',
+            'create': 'yourtemplates/your_create_template.html',
+            'detail': 'yourtemplates/your_detail_template.html',
+            'update': 'yourtemplates/your_update_template.html',
+            'delete': 'yourtemplates/your_delete_template.html'
+            }
 
 
 Enable search in ListView template
@@ -67,10 +67,10 @@ Enable search in ListView template
 
 If you are writing your own custom templates, then please add the following to your list view template to enable the search.::
 
-	<form action="." method="GET">
-	    <input type="text" name='search'>
-	    <button type="submit" >Search</button>
-	</form>
+    <form action="." method="GET">
+        <input type="text" name='search'>
+        <button type="submit" >Search</button>
+    </form>
 
 
 .. _template folder of crudbuilder: https://github.com/asifpy/django-crudbuilder/tree/master/crudbuilder/templates

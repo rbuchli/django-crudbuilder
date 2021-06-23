@@ -1,8 +1,10 @@
 from django.http import HttpResponseRedirect
 
+from django.shortcuts import redirect
+
 from crudbuilder.views import ViewBuilder
 from crudbuilder.helpers import reverse
-from example.crud import PersonCrud
+from .crud import PersonCrud
 
 builder = ViewBuilder('example', 'person', PersonCrud)
 builder.generate_crud()
@@ -51,3 +53,7 @@ class MyCustomPersonCreateView(PersonCreateView):
         instance.save()
         # # your custom logic goes here
         return HttpResponseRedirect(reverse('mycustom-people'))
+
+def login_redirect(request):
+
+    return redirect('/crud/people')

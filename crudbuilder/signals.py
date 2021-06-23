@@ -8,7 +8,6 @@ post_update_signal = Signal(providing_args=['request', 'instance'])
 post_inline_create_signal = Signal(providing_args=['request', 'parent', 'children'])
 post_inline_update_signal = Signal(providing_args=['request', 'parent', 'children'])
 
-
 crudbuilder_signals = {
     'inlineformset': {
         'create': post_inline_create_signal,

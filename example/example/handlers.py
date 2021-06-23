@@ -1,12 +1,12 @@
 from django.dispatch import receiver
-from crudbuilder.signals import(
+
+from crudbuilder.signals import (
     post_create_signal,
     post_update_signal,
     post_inline_create_signal,
     post_inline_update_signal
 )
-
-from example.models import Person
+from .models import Person
 
 
 @receiver(post_create_signal, sender=Person)

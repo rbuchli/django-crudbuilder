@@ -1,24 +1,20 @@
-
 import re
 import string
-import imp
+from importlib.machinery import PathFinder
 
-try:
-    # Django versions >= 1.9
-    from django.utils.module_loading import import_module
-except ImportError:
-    # Django versions < 1.9
-    from django.utils.importlib import import_module
-
+# Django versions >= 1.9
+from django.utils.module_loading import import_module
 
 __all__ = ['plural', 'mixedToUnder', 'capword', 'lowerword', 'underToMixed']
 
+
 # http://code.activestate.com/recipes/82102-smart-pluralisation-english/
 
+# added some german terms here
 
-def plural(text):
+def plural(text, primary):
     """
-        >>> plural('activity')
+        >>> plural('activity', '')
         'activities'
     """
     aberrant = {
@@ -52,11 +48,31 @@ def plural(text):
         'index': 'indices',
         'appendix': 'appendices',
         'criterion': 'criteria',
-
+        'mandant': 'mandanten',
+        'adresse': 'adressen',
+        'objekt': 'objekte',
+        'sitzung': 'sitzungen',
+        'traktandum': 'traktanden',
+        'entscheid': 'entscheide',
+        'nichtentscheid': 'nichtentscheide',
+        'pendenz': 'pendenzen',
+        'pendenzenkommentar': 'pendenzenkommentare',
+        'sitzungstyp': 'sitzungstypen',
+        'status': 'stati',
+        'adresstyp': 'adresstypen',
+        'anrede': 'anreden',
+        'reportfont': 'reportfonts',
+        'reportdesign': 'reportdesigns',
+        'teilnehmerkategorie': 'teilnehmerkategorien',
 
     }
 
-    if text in aberrant:
+    # used meta method for plural if defined, otherwise use method plural
+    # changed by Reto Buchli, 28.03.2021
+
+    if primary:
+        result = primary
+    elif text in aberrant:
         result = '%s' % aberrant[text]
     else:
         postfix = 's'
@@ -126,6 +142,7 @@ def lowerword(s):  # pragma: no cover
     """
     return s[0].lower() + s[1:]
 
+
 _underToMixedRE = re.compile('_.')
 
 
@@ -160,19 +177,24 @@ def underToAllCaps(value):  # pragma: no cover
 
 
 def import_crud(app):
-    '''
+    """
     Import crud module and register all model cruds which it contains
-    '''
+    """
 
     try:
         app_path = import_module(app).__path__
     except (AttributeError, ImportError):
         return None
 
-    try:
-        imp.find_module('crud', app_path)
-    except ImportError:
+    # res = FileFinder(app_path[0] + '\\crud.py')
+    res = PathFinder().find_spec('crud', app_path)
+    if res is None:
         return None
+
+    #    try:
+    #        importlib.util.find_spec('crud', app_path)
+    #    except ImportError:
+    #        return None
 
     module = import_module("%s.crud" % app)
 
@@ -180,9 +202,9 @@ def import_crud(app):
 
 
 def auto_discover():
-    '''
+    """
     Auto register all apps that have module crud
-    '''
+    """
     from django.conf import settings
 
     for app in settings.INSTALLED_APPS:
@@ -193,7 +215,12 @@ def custom_postfix_url(crud, model):
     postfix = getattr(crud, 'custom_postfix_url', None)
 
     if not postfix:
-        postfix = plural(model)
+        # get the model for this (Reto Buchli)
+        # if type(model) == django.db.models.base.ModelBase:
+        #    postfix = model._meta.verbose_name_plural
+        # else:
+        # there may be a better way, but let's live without correct plural here
+        postfix = plural(model, '')
     return postfix
 
 

@@ -1,5 +1,4 @@
 import operator
-import six
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.contrib.auth.views import redirect_to_login
@@ -9,8 +8,7 @@ from django.contrib import messages
 
 from crudbuilder.signals import crudbuilder_signals
 
-if six.PY3:
-    from functools import reduce
+from functools import reduce
 
 
 class LoginRequiredMixin(object):

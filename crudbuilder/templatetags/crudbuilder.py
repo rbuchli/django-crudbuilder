@@ -1,9 +1,10 @@
 import re
-from math import floor
-from django import template
-from itertools import chain
-from django.template.defaultfilters import stringfilter
 from collections import namedtuple
+from itertools import chain
+from math import floor
+
+from django import template
+from django.template.defaultfilters import stringfilter
 
 try:
     from django.utils.encoding import force_text
@@ -49,7 +50,7 @@ def get_model_fields(obj, detail_exclude=None):
     property_fields = []
     for name in dir(model):
         if name not in excludes and isinstance(
-            getattr(model, name, None), property
+                getattr(model, name, None), property
         ):
             property_fields.append(Field(name=name, verbose_name=name))
     fields = chain(obj._meta.fields, property_fields)

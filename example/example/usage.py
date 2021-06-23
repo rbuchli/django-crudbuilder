@@ -40,7 +40,7 @@
 
 >>> from crudbuilder.tables import TableBuilder
 >>> builder = TableBuilder('example', 'person')
->>> PersonTable = builder.generate_table()
+>>> PersonTable = builder.generate_table
 >>> class CustomPersonTable(PersonTable):
 >>>		# add your custom implementation here
 '''
