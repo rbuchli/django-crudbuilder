@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.conf.urls import include
 # from django.contrib import admin
 from django.contrib import admin
 from django.db import connection
@@ -27,11 +27,11 @@ if 'django_content_type' in tables:
     )
 
     urlpatterns += [
-        url(r'^mycustom_people/$',
-            MyCustomPersonListView.as_view(),
-            name='mycustom-people'),
+        path('mycustom_people/',
+             MyCustomPersonListView.as_view(),
+             name='mycustom-people'),
 
-        url(r'^mycustom_people/create/$',
-            MyCustomPersonCreateView.as_view(),
-            name='mycustom-create'),
+        path('mycustom_people/create/',
+             MyCustomPersonCreateView.as_view(),
+             name='mycustom-create'),
     ]

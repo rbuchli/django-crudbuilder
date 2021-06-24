@@ -24,6 +24,7 @@ class Audit(models.Model):
 class Person(Audit):
     """ an actual singular human being """
     # model fields
+    id = models.AutoField(primary_key=True)
     name = models.CharField(blank=True, max_length=100)
     email = models.EmailField()
     img = models.ImageField(

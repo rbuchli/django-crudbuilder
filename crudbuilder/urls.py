@@ -1,6 +1,7 @@
 
 from django.conf.urls import url
 from django.db import connection
+from django.urls import path
 
 from crudbuilder.registry import registry
 from crudbuilder.views import ViewBuilder, crudlist_view
@@ -8,7 +9,7 @@ from crudbuilder import helpers
 helpers.auto_discover()
 
 urlpatterns = [
-    url(r'^$', crudlist_view, name='crud-index'),
+    path('', crudlist_view, name='crud-index'),
 ]
 
 tables = connection.introspection.table_names()
